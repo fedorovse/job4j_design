@@ -9,18 +9,28 @@ public class Converter {
 
         return new Iterator<Integer>() {
             private Iterator<Integer> iterator = it.next();
-            boolean hn = true;
+
+            private void findIt() {
+//                Iterator<Integer> rsl;
+
+                while (it.hasNext()) {
+                    if (!iterator.hasNext()) {
+                        iterator.next();
+                    } else {
+                        break;
+                    }
+                }
+//                return rsl;
+            }
 
             @Override
             public boolean hasNext() {
-                while (it.hasNext()) {
-                    if (!iterator.hasNext()) {
-                        iterator = it.next();
-                    } else {
-                        return true;
-                    }
+                boolean rsl = false;
+                if (!iterator.hasNext()) {
+                    findIt();
+                    rsl = iterator.hasNext();
                 }
-                return false;
+                return rsl;
             }
 
             @Override
