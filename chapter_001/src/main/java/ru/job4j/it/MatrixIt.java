@@ -10,22 +10,31 @@ public class MatrixIt implements Iterator<Integer> {
 
     public MatrixIt(int[][] data) {
         this.data = data;
+        if (data[row].length == 0) {
+            findNextElement();
+        }
+    }
+
+    private void findNextElement() {
+        for (int i = row; i < data.length; i++) {
+            if (column + 1 < data[i].length) {
+                column++;
+                break;
+            } else if (i + 1 < data.length && data[i + 1].length > 0) {
+                row = i + 1;
+                column = 0;
+                break;
+            } else if (i == data.length - 1 && data[i].length == 0) {
+                row = data.length - 1;
+                column = data[i].length;
+                break;
+            }
+        }
     }
 
     @Override
     public boolean hasNext() {
-        boolean result = false;
-        if (column < data[row].length) {
-            result = true;
-        } else if (row + 1 < data.length) {
-            for (int i = row + 1; i < data.length; i++) {
-                if (data[i].length > 0) {
-                    result = true;
-                    break;
-                }
-            }
-        }
-        return result;
+        return column < data[row].length;
     }
 
     @Override
@@ -34,17 +43,8 @@ public class MatrixIt implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        if (column < data[row].length) {
-            result = data[row][column++];
-        } else {
-            for (int i = row + 1; i < data.length; i++) {
-                if (data[i].length > 0) {
-                    row = i;
-                    column = 0;
-                    result = data[row][column++];
-                }
-            }
-        }
+        result = data[row][column];
+        findNextElement();
         return result;
     }
 }
