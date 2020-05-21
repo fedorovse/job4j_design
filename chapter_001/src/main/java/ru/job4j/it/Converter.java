@@ -1,5 +1,6 @@
 package ru.job4j.it;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -8,29 +9,12 @@ public class Converter {
     public Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
 
         return new Iterator<Integer>() {
-            private Iterator<Integer> iterator = initIt();
-
-            private Iterator<Integer> initIt() {
-                iterator = it.next();
-                return findIt();
-            }
-
-            private Iterator<Integer> findIt() {
-                Iterator<Integer> rsl = iterator;
-                while (it.hasNext()) {
-                    if (rsl.hasNext()) {
-                        break;
-                    } else {
-                        rsl = it.next();
-                    }
-                }
-                return rsl;
-            }
+            private Iterator<Integer> iterator = Collections.emptyIterator();
 
             @Override
             public boolean hasNext() {
-                if (!iterator.hasNext()) {
-                    iterator = findIt();
+                while (!iterator.hasNext() && it.hasNext()) {
+                    iterator = it.next();
                 }
                 return iterator.hasNext();
             }
@@ -40,7 +24,7 @@ public class Converter {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return findIt().next();
+                return iterator.next();
             }
         };
     }
