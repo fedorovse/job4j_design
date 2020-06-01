@@ -35,8 +35,9 @@ public class SimpleArray<T> implements Iterable {
 
     public T remove(int index) {
         T removedT = this.get(index);
-        if (this.position - 1 - index >= 0)
+        if (this.position - 1 - index >= 0) {
             System.arraycopy(tArray, index + 1, tArray, index, this.position - 1 - index);
+        }
         this.position--;
         return removedT;
     }
