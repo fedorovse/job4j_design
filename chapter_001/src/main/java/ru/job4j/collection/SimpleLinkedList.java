@@ -1,5 +1,6 @@
 package ru.job4j.collection;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -68,13 +69,20 @@ public class SimpleLinkedList<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-//                return get(index);
-                return false;
+                checkModCount();
+                return index < size;
             }
 
             @Override
             public T next() {
-                return null;
+                checkModCount();
+                return get(index++);
+            }
+
+            private void checkModCount() {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
             }
         };
     }
