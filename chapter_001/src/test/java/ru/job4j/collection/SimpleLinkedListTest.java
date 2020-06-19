@@ -3,6 +3,7 @@ package ru.job4j.collection;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 import static org.junit.Assert.assertThat;
@@ -60,5 +61,12 @@ public class SimpleLinkedListTest {
         array.iterator().next();
     }
 
-    
+    @Test(expected = ConcurrentModificationException.class)
+    public void whenCorruptedIt() {
+        SimpleLinkedList<String> array = new SimpleLinkedList<>();
+        array.add("first");
+        Iterator<String> it = array.iterator();
+        array.add("two");
+        it.next();
+    }
 }

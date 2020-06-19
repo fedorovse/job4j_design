@@ -2,13 +2,33 @@ package ru.job4j.collection;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Objects;
 
+/**
+ * SimpleLinkedList - реализует двусвязный список для хранения объектов
+ * @author Fedorov Sergey email: ingor-ru@mail.ru
+ * @since 20.06.2020
+ * @version 1
+ * @param <T>
+ */
+
 public class SimpleLinkedList<T> implements Iterable<T> {
+    /**
+     * текущий размер списка
+     */
     private int size = 0;
+    /**
+     * modCount - счетчик который изменяется при добавлении элементов.
+     * Необходим для предотвращения изменений при обходе массива итератором
+     */
     private int modCount = 0;
+    /**
+     * first - ссылка на первый объект в списке
+     */
     private Node<T> first;
+    /**
+     * last - ссылка на последний объект в списке
+     */
     private Node<T> last;
 
     public SimpleLinkedList() {
