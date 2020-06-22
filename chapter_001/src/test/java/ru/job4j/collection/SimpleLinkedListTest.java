@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -55,7 +56,7 @@ public class SimpleLinkedListTest {
         array.get(1);
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test(expected = NoSuchElementException.class)
     public void whenEmptyIt() {
         SimpleLinkedList<String> array = new SimpleLinkedList<>();
         array.iterator().next();
