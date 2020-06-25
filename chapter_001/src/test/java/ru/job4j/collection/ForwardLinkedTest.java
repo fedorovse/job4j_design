@@ -33,4 +33,31 @@ public class ForwardLinkedTest {
         Iterator<Integer> it = linked.iterator();
         assertThat(it.next(), is(2));
     }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenMultiDeleteLast() {
+        ForwardLinked<Integer> linked = new ForwardLinked<>();
+//        linked.add(1);
+        linked.add(2);
+        linked.add(3);
+        linked.deleteLast();
+        Iterator<Integer> it = linked.iterator();
+//        assertThat(it.next(), is(1));
+        assertThat(it.next(), is(2));
+        it.next();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenDeleteLastEmptyLinked() {
+        ForwardLinked<Integer> linked = new ForwardLinked<>();
+        linked.deleteLast();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenDeleteLast() {
+        ForwardLinked<Integer> linked = new ForwardLinked<>();
+        linked.add(1);
+        linked.deleteLast();
+        linked.iterator().next();
+    }
 }
