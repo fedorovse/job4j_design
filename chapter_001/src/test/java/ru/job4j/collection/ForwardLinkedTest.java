@@ -60,4 +60,16 @@ public class ForwardLinkedTest {
         linked.deleteLast();
         linked.iterator().next();
     }
+
+    @Test
+    public void whenAddFirst() {
+        ForwardLinked<Integer> linked = new ForwardLinked<>();
+        linked.addFirst(1);
+        linked.addFirst(2);
+        linked.addFirst(3);
+        Iterator<Integer> it = linked.iterator();
+        assertThat(it.next(), is(3));
+        assertThat(it.next(), is(2));
+        assertThat(it.next(), is(1));
+    }
 }

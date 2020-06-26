@@ -31,4 +31,29 @@ public class SimpleStackTest {
         stack.pop();
         assertThat(stack.pop(), is(1));
     }
+
+    @Test
+    public void whenPushFirstThenPollFirst() {
+        SimpleStack<Integer> stack = new SimpleStack<>();
+        stack.pushFirst(1);
+        assertThat(stack.popFirst(), is(1));
+    }
+
+    @Test
+    public void whenPushFirstPollFirstThenPushFirstPollFirst() {
+        SimpleStack<Integer> stack = new SimpleStack<>();
+        stack.pushFirst(1);
+        stack.popFirst();
+        stack.pushFirst(2);
+        assertThat(stack.popFirst(), is(2));
+    }
+
+    @Test
+    public void whenPushFirstPushFirstThenPollFirstPollFirst() {
+        SimpleStack<Integer> stack = new SimpleStack<>();
+        stack.pushFirst(1);
+        stack.pushFirst(2);
+        stack.popFirst();
+        assertThat(stack.popFirst(), is(1));
+    }
 }

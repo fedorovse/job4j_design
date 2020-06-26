@@ -28,4 +28,19 @@ public class SimpleStack<T> {
     public void push(T value) {
         linked.add(value);
     }
+
+    public T popFirst() {
+        T result = null;
+        Iterator<T> it = linked.iterator();
+        if (it.hasNext()) {
+            result = it.next();
+        }
+        linked.deleteFirst();
+        return result;
+    }
+
+    public void pushFirst(T value) {
+        linked.addFirst(value);
+    }
+
 }

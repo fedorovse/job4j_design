@@ -16,6 +16,10 @@ public class ForwardLinked<T> implements Iterable<T> {
      */
     private Node<T> head;
 
+    /**
+     * Метод добавляет переданный объект в конец списка
+     * @param value - объект который добавляем в список
+     */
     public void add(T value) {
         Node<T> node = new Node<T>(value, null);
         if (head == null) {
@@ -27,6 +31,11 @@ public class ForwardLinked<T> implements Iterable<T> {
             tail = tail.next;
         }
         tail.next = node;
+    }
+
+    public void addFirst(T value) {
+        Node<T> second = head;
+        head = new Node<T>(value, second);
     }
 
     public void deleteFirst() {
