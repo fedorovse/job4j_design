@@ -3,7 +3,17 @@ package ru.job4j.collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Односвязный список
+ * @author Fedorov Sergey email: ingor-ru@mail.ru
+ * @since 26.06.2020
+ * @version 1
+ * @param <T>
+ */
 public class ForwardLinked<T> implements Iterable<T> {
+    /**
+     * Первый элемент списка
+     */
     private Node<T> head;
 
     public void add(T value) {
@@ -31,13 +41,15 @@ public class ForwardLinked<T> implements Iterable<T> {
             throw new NoSuchElementException();
         }
         Node<T> tail = head;
-        while (tail.next != null) {
-            if (tail.next.next == null) {
-                break;
+        if (tail.next == null) {
+            head = null;
+        } else {
+            while (tail.next.next != null) {
+                tail = tail.next;
             }
-            tail = tail.next;
+            tail.next = null;
         }
-        tail.next = null;
+
     }
 
     @Override
