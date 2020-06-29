@@ -30,13 +30,7 @@ public class SimpleStack<T> {
     }
 
     public T popFirst() {
-        T result = null;
-        Iterator<T> it = linked.iterator();
-        if (it.hasNext()) {
-            result = it.next();
-        }
-        linked.deleteFirst();
-        return result;
+        return linked.deleteFirst();
     }
 
     public void pushFirst(T value) {
