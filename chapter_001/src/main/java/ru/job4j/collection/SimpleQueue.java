@@ -2,11 +2,27 @@ package ru.job4j.collection;
 
 import java.util.NoSuchElementException;
 
+/**
+ * Реализована очередь на двух стэках
+ * @author Fedorov Sergey email: ingor-ru@mail.ru
+ * @since 29.06.2020
+ * @version 1
+ * @param <T>
+ */
 public class SimpleQueue<T> {
-
+    /**
+     * В этом стэке сохраняем объекты, которые поступают в очередь
+     */
     private final SimpleStack<T> in = new SimpleStack<>();
+    /**
+     * Из этого стэка отдаём очередной объект
+     */
     private final SimpleStack<T> out = new SimpleStack<>();
 
+    /**
+     * Возвращает следующий в очереди объект, либо кидает NoSuchElementException если очередь пуста
+     * @return T объект
+     */
     public T poll() {
         if (isOutEmpty()) {
             if (isInEmpty()) {
@@ -21,6 +37,10 @@ public class SimpleQueue<T> {
         return out.pop();
     }
 
+    /**
+     * Добавляет объект в очередь.
+     * @param value - объект который сохраняетм в очереди
+     */
     public void push(T value) {
         if (isInEmpty()) {
             while (!isOutEmpty()) {
@@ -32,21 +52,24 @@ public class SimpleQueue<T> {
     }
 
     private boolean isInEmpty() {
-//        boolean result = false;
+        boolean result = false;
         try {
-            return in.pop() == null;
+            T value = in.pop();
+            in.push(value);
         } catch (NoSuchElementException e) {
-            return false;
+            result = true;
         }
+        return result;
     }
 
     private boolean isOutEmpty() {
-//        return out.pop() == null;
-//        boolean result = false;
+        boolean result = false;
         try {
-            return out.pop() == null;
+            T value = out.pop();
+            out.push(value);
         } catch (NoSuchElementException e) {
-            return false;
+            result = true;
         }
+        return result;
     }
 }
