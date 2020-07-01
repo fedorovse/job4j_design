@@ -52,24 +52,10 @@ public class SimpleQueue<T> {
     }
 
     private boolean isInEmpty() {
-        boolean result = false;
-        try {
-            T value = in.pop();
-            in.push(value);
-        } catch (NoSuchElementException e) {
-            result = true;
-        }
-        return result;
+        return in.size() == 0;
     }
 
     private boolean isOutEmpty() {
-        boolean result = false;
-        try {
-            T value = out.pop();
-            out.push(value);
-        } catch (NoSuchElementException e) {
-            result = true;
-        }
-        return result;
+        return out.size() == 0;
     }
 }

@@ -56,4 +56,24 @@ public class SimpleStackTest {
         stack.popFirst();
         assertThat(stack.popFirst(), is(1));
     }
+
+    @Test
+    public void whenSizeTwo() {
+        SimpleStack<Integer> stack = new SimpleStack<>();
+        stack.push(1);
+        stack.push(2);
+        int result = stack.size();
+        assertThat(result, is(2));
+    }
+
+    @Test
+    public void whenPopOneValueThanSizeTwo() {
+        SimpleStack<Integer> stack = new SimpleStack<>();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.pop();
+        int result = stack.size();
+        assertThat(result, is(2));
+    }
 }

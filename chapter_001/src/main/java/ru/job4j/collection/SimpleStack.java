@@ -11,6 +11,10 @@ import java.util.Iterator;
  */
 public class SimpleStack<T> {
     /**
+     * текущий размер стэка
+     */
+    private int size = 0;
+    /**
      * Односвязный список для хранения стэка
      */
     private ForwardLinked<T> linked = new ForwardLinked<T>();
@@ -22,19 +26,30 @@ public class SimpleStack<T> {
             result = it.next();
         }
         linked.deleteLast();
+        this.size--;
         return result;
     }
 
     public void push(T value) {
         linked.add(value);
+        this.size++;
     }
 
     public T popFirst() {
-        return linked.deleteFirst();
+        T result = null;
+        if (this.size > 0) {
+            result = linked.deleteFirst();
+        }
+        return result;
     }
 
     public void pushFirst(T value) {
         linked.addFirst(value);
+        this.size++;
+    }
+
+    public int size() {
+        return this.size;
     }
 
 }
