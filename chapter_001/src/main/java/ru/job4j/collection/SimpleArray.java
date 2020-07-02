@@ -77,7 +77,7 @@ public class SimpleArray<T> implements Iterable<T> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (T) array[index];
+                return (T) array[index++];
             }
 
             private void checkModCount() {

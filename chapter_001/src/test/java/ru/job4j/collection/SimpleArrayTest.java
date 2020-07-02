@@ -64,6 +64,15 @@ public class SimpleArrayTest {
         array.iterator().next();
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void whenAddOneAndGetTwoFromIt() {
+        SimpleArray<String> array = new SimpleArray<>();
+        array.add("first");
+        Iterator<String> it = array.iterator();
+        it.next();
+        it.next();
+    }
+
     @Test(expected = ConcurrentModificationException.class)
     public void whenCorruptedIt() {
         SimpleArray<String> array = new SimpleArray<>();
