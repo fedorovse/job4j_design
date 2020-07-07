@@ -42,12 +42,6 @@ public class SimpleQueue<T> {
      * @param value - объект который сохраняетм в очереди
      */
     public void push(T value) {
-        if (isInEmpty()) {
-            while (!isOutEmpty()) {
-               T buf = out.pop();
-               in.push(buf);
-            }
-        }
         in.push(value);
     }
 

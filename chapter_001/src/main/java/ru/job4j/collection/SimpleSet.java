@@ -11,7 +11,7 @@ import java.util.Objects;
  * @param <T>
  */
 public class SimpleSet<T> implements Iterable<T> {
-    
+
     /**
      * array - динамический массив для хранения объектвов
      */
