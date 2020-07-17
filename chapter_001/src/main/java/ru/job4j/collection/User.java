@@ -1,6 +1,7 @@
 package ru.job4j.collection;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class User {
 
@@ -24,5 +25,15 @@ public class User {
 
     public Calendar getBirthday() {
         return birthday;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return this == o;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
     }
 }
