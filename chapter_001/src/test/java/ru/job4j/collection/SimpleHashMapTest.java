@@ -17,7 +17,7 @@ public class SimpleHashMapTest {
     }
 
     @Test
-    public void whenInsertTwoEqualThenGetOne() {
+    public void whenInsertTwoEqualThenGetLastOne() {
         SimpleHashMap<String, String> strings = new SimpleHashMap<>();
         strings.insert("1", "a");
         strings.insert("1", "b");
@@ -31,5 +31,32 @@ public class SimpleHashMapTest {
         strings.insert("1", "a");
         strings.delete("1");
         assertThat(strings.get("1"), is(nullValue()));
+    }
+
+    @Test
+    public void whenInsertNullValueGetNull() {
+        SimpleHashMap<String, String> strings = new SimpleHashMap<>();
+        strings.insert("1", null);
+        assertThat(strings.get("1"), is(nullValue()));
+    }
+
+    @Test
+    public void whenInsertNullKeyGetValue() {
+        SimpleHashMap<String, String> strings = new SimpleHashMap<>();
+        strings.insert(null, "c");
+        assertThat(strings.get(null), is("c"));
+    }
+
+    @Test
+    public void whenInsert26ThenResize() {
+        SimpleHashMap<String, String> strings = new SimpleHashMap<>();
+        for (int index = 0; index < 13; index++) {
+            strings.insert("123" + index, "c" + index);
+        }
+        assertThat(strings.getSize(), is(12));
+        for (int index = 0; index < 13; index++) {
+            strings.insert("index" + index, "ccc" + index);
+        }
+        assertThat(strings.getSize(), is(25));
     }
 }
