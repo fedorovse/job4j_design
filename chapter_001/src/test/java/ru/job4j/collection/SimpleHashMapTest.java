@@ -48,6 +48,14 @@ public class SimpleHashMapTest {
     }
 
     @Test
+    public void whenInsertTwoNullKeysGetLastValue() {
+        SimpleHashMap<String, String> strings = new SimpleHashMap<>();
+        strings.insert(null, "c");
+        strings.insert(null, "d");
+        assertThat(strings.get(null), is("d"));
+    }
+
+    @Test
     public void whenInsert26ThenResize() {
         SimpleHashMap<String, String> strings = new SimpleHashMap<>();
         for (int index = 0; index < 13; index++) {
@@ -58,5 +66,15 @@ public class SimpleHashMapTest {
             strings.insert("index" + index, "ccc" + index);
         }
         assertThat(strings.getSize(), is(25));
+    }
+
+    @Test
+    public void whenInsertInOneBasketThenFalse() {
+        SimpleHashMap<String, String> strings = new SimpleHashMap<>();
+        strings.insert("11", "c1");
+        assertThat(strings.get("11"), is("c1"));
+        assertThat(strings.insert("110", "c10"), is(false));
+        assertThat(strings.get("11"), is("c1"));
+        assertThat(strings.get("110"), is(nullValue()));
     }
 }
