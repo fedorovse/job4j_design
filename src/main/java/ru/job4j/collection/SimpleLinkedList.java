@@ -85,12 +85,11 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
         return new Iterator<E>() {
 
             private final int expectedModCount = modCount;
-            private int point = 0;
-            private Node<E> iteratorNode;
+            private Node<E> iteratorNode = first;
 
             @Override
             public boolean hasNext() {
-                return point < size;
+                return iteratorNode != null;
             }
 
             @Override
@@ -101,13 +100,9 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                if (point == 0) {
-                    iteratorNode = first;
-                } else {
-                    iteratorNode = iteratorNode.next;
-                }
-                point++;
-                return iteratorNode.item;
+                Node<E> result = iteratorNode;
+                iteratorNode = iteratorNode.next;
+                return result.item;
             }
         };
     }
