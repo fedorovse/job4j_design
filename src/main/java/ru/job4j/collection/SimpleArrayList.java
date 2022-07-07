@@ -33,7 +33,9 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     }
 
     private void grow() {
-        container = Arrays.copyOf(container, container.length * 2);
+        container = container.length == 0
+                ? Arrays.copyOf(container, 2)
+                : Arrays.copyOf(container, container.length * 2);
     }
 
     /**
@@ -59,8 +61,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
      */
     @Override
     public T set(int index, T newValue) {
-        Objects.checkIndex(index, container.length);
-        T old = container[index];
+        T old = this.get(index);
         container[index] = newValue;
         modCount++;
         return old;
@@ -74,8 +75,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
      */
     @Override
     public T remove(int index) {
-        Objects.checkIndex(index, container.length);
-        T old = container[index];
+        T old = this.get(index);
         System.arraycopy(container, index + 1, container, index, container.length - index - 1);
         container[container.length - 1] = null;
         size--;
@@ -91,7 +91,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
      */
     @Override
     public T get(int index) {
-        Objects.checkIndex(index, container.length);
+        Objects.checkIndex(index, size);
         return container[index];
     }
 

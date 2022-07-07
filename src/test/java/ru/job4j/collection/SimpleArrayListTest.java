@@ -36,6 +36,12 @@ public class SimpleArrayListTest {
         list.get(5);
     }
 
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void whenGetByIncorrectIndexThenGetException() {
+        list = new SimpleArrayList<>();
+        list.get(5);
+    }
+
     @Test
     public void whenRemoveThenGetValueAndSizeDecrease() {
         Assert.assertEquals(3, list.size());
