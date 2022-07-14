@@ -19,12 +19,6 @@ public class SimpleSet<T> implements Set<T> {
     private final SimpleArrayList<T> set = new SimpleArrayList<>();
 
     /**
-     * поле modCount - счетчик модификаций множества
-     * инкрементируется при любом его изменении
-     */
-    private int modCount = 0;
-
-    /**
      * Метод добавит новый элемент в множество при условии,
      * что такого элемента в множестве нет
      * @param value элемент типа Т, который добавляем в множество
@@ -36,7 +30,6 @@ public class SimpleSet<T> implements Set<T> {
         if (!this.contains(value)) {
             set.add(value);
             result = true;
-            modCount++;
         }
         return result;
     }
@@ -60,26 +53,6 @@ public class SimpleSet<T> implements Set<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<>() {
-
-            private int point = 0;
-            private final int expectedModCount = modCount;
-
-            @Override
-            public boolean hasNext() {
-                return point < set.size();
-            }
-
-            @Override
-            public T next() {
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException();
-                }
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                return set.get(point++);
-            }
-        };
+        return set.iterator();
     }
 }
