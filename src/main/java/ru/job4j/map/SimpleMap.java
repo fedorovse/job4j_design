@@ -34,6 +34,12 @@ public class SimpleMap<K, V> implements Map<K, V> {
      */
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
+    /**
+     * Кладет пару в мапу. Если ячейка уже занята, то не кладет
+     * @param key типа К ключ пары
+     * @param value типа V значение пары
+     * @return boolean true если пара добавлена в мапу и false если ячейка уже занята
+     */
     @Override
     public boolean put(K key, V value) {
         boolean result = false;
@@ -116,6 +122,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
         if (table[index] != null) {
             table[index] = null;
             result = true;
+            count--;
             modCount++;
         }
         return result;
