@@ -14,7 +14,7 @@ public class LogFilter {
             String logString;
             while ((logString = reader.readLine()) != null) {
                 String[] parts = logString.split(" ");
-                if (Integer.parseInt(parts[parts.length - 2]) == 404) {
+                if ("404".equals(parts[parts.length - 2])) {
                     rsl.add(logString);
                 }
             }
@@ -27,6 +27,6 @@ public class LogFilter {
     public static void main(String[] args) {
         LogFilter logFilter = new LogFilter();
         List<String> log = logFilter.filter("log.txt");
-        System.out.println(log);
+        log.forEach(System.out::println);
     }
 }
