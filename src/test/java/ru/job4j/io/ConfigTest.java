@@ -25,21 +25,40 @@ class ConfigTest {
     @Test
     public void whenNoKey() {
         String path = "./data/whenNoKey.properties";
+        String message = "No key and/or value in line: {=Sergey Fedorov}";
         Config config = new Config(path);
-        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(message);
     }
 
     @Test
     public void whenNoValue() {
         String path = "./data/whenNoValue.properties";
+        String message = "No key and/or value in line: {name=}";
         Config config = new Config(path);
-        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(message);
     }
 
     @Test
     public void whenNoEquals() {
         String path = "./data/whenNoEquals.properties";
+        String message = "String does not contain a separator \"=\" {nameSergey Fedorov}";
         Config config = new Config(path);
-        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(message);
+    }
+
+    @Test
+    public void whenValuesIsEmpty() {
+        String path = "./data/whenPairWithoutComment.properties";
+        String message = "Don't impl this method yet!";
+        Config config = new Config(path);
+        assertThatThrownBy(() -> config.value("name"))
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessageContaining(message);
     }
 }
