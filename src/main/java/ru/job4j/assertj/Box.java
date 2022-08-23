@@ -49,4 +49,9 @@ public class Box {
             default -> 0;
         };
     }
+
+    public static void main(String[] args) {
+        Box box = new Box(4, 2);
+        System.out.println(box.whatsThis());
+    }
 }
