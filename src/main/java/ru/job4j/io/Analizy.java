@@ -6,7 +6,7 @@ public class Analizy {
 
     public void unavailable(String source, String target) {
         try (BufferedReader in = new BufferedReader(new FileReader(source));
-             PrintWriter out = new PrintWriter(new BufferedWriter(new PrintWriter(target)))) {
+             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(target)))) {
             String logStr;
             String notConnected = null;
             String connected = "";
