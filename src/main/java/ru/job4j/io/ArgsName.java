@@ -31,10 +31,10 @@ public class ArgsName {
      * @param args массив String - входящие аргументы
      */
     private void parse(String[] args) {
-        if (!validation(args)) {
-            throw new IllegalArgumentException("input arguments are not valid");
-        }
         for (String arg : args) {
+            if (!validation(arg)) {
+                throw new IllegalArgumentException("input argument are not valid");
+            }
             String key = arg.substring(1, arg.indexOf("="));
             String value = arg.substring(arg.indexOf("=") + 1);
             values.put(key, value);
@@ -45,19 +45,10 @@ public class ArgsName {
         return values.containsKey(key);
     }
 
-    private boolean validation(String[] args) {
-        if (args.length == 0) {
-            return false;
-        }
-        for (String arg : args) {
-            if (!arg.startsWith("-")
-                    || !arg.contains("=")
-                    || arg.indexOf("=") < 2
-                    || arg.substring(arg.indexOf("=")).length() < 2) {
-                return false;
-            }
-        }
-        return true;
+    private boolean validation(String arg) {
+        return arg.startsWith("-")
+                && arg.indexOf("=") >= 2
+                && arg.substring(arg.indexOf("=")).length() >= 2;
     }
 
     /**
@@ -66,6 +57,9 @@ public class ArgsName {
      * @return объект ArgsName
      */
     public static ArgsName of(String[] args) {
+        if (args.length == 0) {
+            throw new IllegalArgumentException("arguments not found");
+        }
         ArgsName names = new ArgsName();
         names.parse(args);
         return names;
