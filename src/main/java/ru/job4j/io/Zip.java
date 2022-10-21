@@ -8,12 +8,33 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+/**
+ * Простая утилита для архивирования файлов и директорий
+ * формат аргументов для запуска: пример -d=c:\projects\job4j\ -e=.class -o=project.zip
+ * d - путь к директории, которая будет архивироваться
+ * е - тип файлов, которые архивировать не надо
+ * о - название архива
+ */
 public class Zip {
 
+    /**
+     * directory - путь к директории, которая будет архивироваться
+     */
     private Path directory;
+    /**
+     * exclude - тип файлов, которые архивировать не надо
+     */
     private String exclude;
+    /**
+     * output - название архива
+     */
     private Path output;
 
+    /**
+     * Пакует в архив переданные файлы
+     * @param sources List c файлами, которые будем архивировать
+     * @param target File архив
+     */
     public void packFiles(List<File> sources, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
             for (File source : sources) {
@@ -27,6 +48,11 @@ public class Zip {
         }
     }
 
+    /**
+     * Пакует в архив один переданный файл
+     * @param source File - который надо запаковать
+     * @param target File - архив
+     */
     public void packSingleFile(File source, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
             zip.putNextEntry(new ZipEntry(source.getPath()));
@@ -43,6 +69,11 @@ public class Zip {
         return pathList.stream().map(Path::toFile).collect(Collectors.toList());
     }
 
+    /**
+     * Проверка входных аргументов. Если аргументы заданы неправильно
+     * кидается соответствующее исключение с пояснением
+     * @param args - массив строк. Переданные аргументы
+     */
     private void validateArgs(String[] args) {
         if (args.length != 3) {
             throw new IllegalArgumentException("Not enough arguments");
