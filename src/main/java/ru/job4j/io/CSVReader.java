@@ -84,7 +84,7 @@ public class CSVReader {
     }
 
     private void writeData(String data) throws IOException {
-        if (out.equals("stdout")) {
+        if ("stdout".equals(out)) {
             System.out.print(data);
         } else {
             try (BufferedWriter saveResult = new BufferedWriter(new FileWriter(out, StandardCharsets.UTF_8))) {
