@@ -99,4 +99,9 @@ public class CSVReader {
         csvReader.readCSV();
         csvReader.writeData(csvReader.filterCSV(csvReader.filter));
     }
+
+    public static void main(String[] args) throws Exception {
+        ArgsName argsName = ArgsName.of(args);
+        CSVReader.handle(argsName);
+    }
 }
