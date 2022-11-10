@@ -16,14 +16,12 @@ public class EchoServer {
                     String answer = "What";
                     String inMsg = in.readLine();
                     System.out.println(inMsg);
-                    if (inMsg != null) {
-                        if (inMsg.contains("msg=Hello")) {
-                            answer = "Hello";
-                        } else if (inMsg.contains("msg=Exit")) {
-                            answer = "Exit";
-                            System.out.println("Завершение работы сервера");
-                            server.close();
-                        }
+                    if (inMsg.contains("msg=Hello")) {
+                        answer = "Hello";
+                    } else if (inMsg.contains("msg=Exit")) {
+                        answer = "Exit";
+                        System.out.println("Завершение работы сервера");
+                        server.close();
                     }
                     out.write(answer.getBytes());
                     out.flush();
