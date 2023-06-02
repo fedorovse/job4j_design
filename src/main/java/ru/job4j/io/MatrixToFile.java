@@ -17,7 +17,7 @@ public class MatrixToFile {
 
     public static void main(String[] args) {
         int[][] rsl = multiple(9);
-        try (FileOutputStream out = new FileOutputStream("matrix.txt")) {
+        try (FileOutputStream out = new FileOutputStream("data/matrix.txt")) {
             for (int[] row : rsl) {
                 for (int cell : row) {
                     out.write((cell + " ").getBytes());

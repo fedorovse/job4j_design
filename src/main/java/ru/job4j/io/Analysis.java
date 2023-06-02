@@ -2,7 +2,7 @@ package ru.job4j.io;
 
 import java.io.*;
 
-public class Analizy {
+public class Analysis {
 
     public void unavailable(String source, String target) {
         try (BufferedReader in = new BufferedReader(new FileReader(source));
@@ -28,7 +28,7 @@ public class Analizy {
     }
 
     public static void main(String[] args) {
-        Analizy analizy = new Analizy();
-        analizy.unavailable("analizySorce.txt", "analizeTarget.txt");
+        Analysis analysis = new Analysis();
+        analysis.unavailable("data/server.log", "data/target.csv");
     }
 }

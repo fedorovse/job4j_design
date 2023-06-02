@@ -8,11 +8,11 @@ import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.*;
 
-class AnalizyTest {
+class AnalysisTest {
 
     @Test
     void whenUnavailable(@TempDir Path tempDir) throws IOException {
-        File source = tempDir.resolve("analizySource.txt").toFile();
+        File source = tempDir.resolve("server.log").toFile();
         try (PrintWriter writer = new PrintWriter(source)) {
             writer.println("200 10:56:01");
             writer.println("500 10:57:01");
@@ -28,9 +28,9 @@ class AnalizyTest {
             writer.println("300 11:02:02");
         }
 
-        File target = tempDir.resolve("analizyTarget.txt").toFile();
-        Analizy analizy = new Analizy();
-        analizy.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
+        File target = tempDir.resolve("target.csv").toFile();
+        Analysis analysis = new Analysis();
+        analysis.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
 
         StringBuilder str = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(target))) {

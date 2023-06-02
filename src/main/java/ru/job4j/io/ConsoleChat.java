@@ -44,7 +44,7 @@ public class ConsoleChat {
     /**
      * Основная логика программы. Чтение сообщений пользователя и рандомный ответ
      * на них от бота (если он разрешен). При выходе запись всей беседы в файл.
-     * @throws IOException
+     * throws IOException
      */
     public void run() throws IOException {
         List<String> botAnswersList = readPhrases();
@@ -105,7 +105,7 @@ public class ConsoleChat {
     }
 
     public static void main(String[] args) throws IOException {
-        ConsoleChat cc = new ConsoleChat("dialog.txt", "botAnswers.txt");
+        ConsoleChat cc = new ConsoleChat("data/dialog.txt", "data/botAnswers.txt");
         cc.run();
     }
 }
