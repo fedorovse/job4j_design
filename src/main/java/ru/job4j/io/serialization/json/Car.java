@@ -1,9 +1,22 @@
 package ru.job4j.io.serialization.json;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "car")
 public class Car {
-    private final String color;
-    private final String brand;
-    private final String number;
+
+    @XmlAttribute
+    private String color;
+
+    @XmlAttribute
+    private String brand;
+
+    @XmlAttribute
+    private String number;
+
+    public Car() {
+    }
 
     public Car(String color, String brand, String number) {
         this.color = color;
