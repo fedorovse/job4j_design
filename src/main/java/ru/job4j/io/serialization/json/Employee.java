@@ -19,6 +19,30 @@ public class Employee {
     @XmlAttribute
     private boolean sex;
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSureName() {
+        return sureName;
+    }
+
+    public boolean isSex() {
+        return sex;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public String[] getSkills() {
+        return skills;
+    }
+
     private Car car;
 
     @XmlElementWrapper(name = "skills")
