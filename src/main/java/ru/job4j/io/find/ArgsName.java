@@ -1,0 +1,76 @@
+package ru.job4j.io.find;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Валидация и парсинг входных аргументов
+ */
+public class ArgsName {
+
+    /**
+     * values - хранит в Мар тип аргумента и его значение
+     */
+    private final Map<String, String> values = new HashMap<>();
+
+    /**
+     * Проверка параметра и поиск его значения
+     * @param key String - название параметра
+     * @return String - значение соответствующее переданному параметру
+     * если параметр не валиден, то кинет IllegalArgumentException
+     */
+    public String get(String key) {
+        if (!keyValidation(key)) {
+            throw new IllegalArgumentException("key: " + key + " not found");
+        }
+        return values.get(key);
+    }
+
+    /**
+     * Парсит переданные аргументы в Мар(тип параметра, его значение)
+     * @param args массив String - входящие аргументы
+     */
+    private void parse(String[] args) {
+        for (String arg : args) {
+            if (!validation(arg)) {
+                throw new IllegalArgumentException("input argument are not valid");
+            }
+            String key = arg.substring(1, arg.indexOf("="));
+            String value = arg.substring(arg.indexOf("=") + 1);
+            values.put(key, value);
+        }
+    }
+
+    private boolean keyValidation(String key) {
+        return values.containsKey(key);
+    }
+
+    private boolean validation(String arg) {
+        return arg.startsWith("-")
+                && arg.indexOf("=") >= 2
+                && arg.substring(arg.indexOf("=")).length() >= 2;
+    }
+
+    /**
+     * Создание объекта ArgsName и парсинг переданных аргументов
+     * @param args массив String с переданными аргументами
+     * @return объект ArgsName
+     */
+    public static ArgsName of(String[] args) {
+        if (args.length == 0) {
+            throw new IllegalArgumentException("arguments not found");
+        }
+        ArgsName names = new ArgsName();
+        names.parse(args);
+        return names;
+    }
+
+    public static void main(String[] args) {
+        ArgsName jvm = ArgsName.of(new String[] {"-Xmx=512", "-encoding=UTF-8"});
+        System.out.println(jvm.get("Xmx"));
+
+        ArgsName zip = ArgsName.of(new String[] {"-out=project.zip", "-encoding=UTF-8"});
+        System.out.println(zip.get("out"));
+        System.out.println(zip.get("encoding"));
+    }
+}
