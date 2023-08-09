@@ -11,9 +11,19 @@ import java.util.function.Predicate;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 
+/**
+ * Поиск файлов соответствующих переданному условию (предикату)
+ */
 public class SearchFiles implements FileVisitor<Path> {
 
+    /**
+     * condition - хранит Predicate (условие), которому должен соответствовать искомый файл
+     */
     private final Predicate<Path> condition;
+
+    /**
+     * pathList - сюда сохраняются все файлы удовлетворяющие условию поиска
+     */
     private final List<Path> pathList = new ArrayList<>();
 
     public SearchFiles(Predicate<Path> condition) {
@@ -27,9 +37,7 @@ public class SearchFiles implements FileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        System.out.println(file.getFileName().toString());
         if (condition.test(file)) {
-            System.out.println(file);
             pathList.add(file);
         }
         return CONTINUE;

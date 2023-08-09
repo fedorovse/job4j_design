@@ -5,14 +5,40 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
+/**
+ * Поиск файлов в заданном каталоге, удовлетворяющих определенному условию.
+ * Условия поиска: по имени, по маске, по регулярному выражению.
+ * Формат: -d=D:\11111 -n=*.d?c -t=mask -o=data/findLog.txt
+ * d - путь к папке в которой будем искать
+ * n - имя, маска или регулярное выражение
+ * t - name для поиска по имени, mask для маски, regex для регулярного выражения
+ * o - файл, куда будут записаны результаты поиска
+ */
 public class Find {
 
+    /**
+     * dValue - путь к папке в которой будем искать
+     */
     private String dValue;
+    /**
+     * nValue - имя, маска или регулярное выражение
+     */
     private String nValue;
+    /**
+     * tValue - name для поиска по имени, mask для маски, regex для регулярного выражения
+     */
     private String tValue;
+    /**
+     * oValue - файл, куда будут записаны результаты поиска
+     */
     private String oValue;
-    Predicate<Path> condition;
+    /**
+     * condition - условие поиска
+     */
+    private Predicate<Path> condition;
 
     public static void main(String[] args) {
         Find findFiles = new Find();
@@ -28,6 +54,10 @@ public class Find {
         }
     }
 
+    /**
+     * Запись в файл найденных файлов
+     * @param list содержит пути к найденным файлам
+     */
     private void writeToFile(List<Path> list) {
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(oValue)))) {
             for (Path path : list) {
@@ -38,38 +68,41 @@ public class Find {
         }
     }
 
+    /**
+     * формирование условия поиска на основе входных данных
+     */
     private void getPredicate() {
        if ("name".equals(tValue)) {
             condition = p -> nValue.equals(p.getFileName().toString());
         } else if ("mask".equals(tValue)) {
-            String s = maskToRegexp(nValue);
-            condition = p -> p
-                    .getFileName()
+            String regexpString = maskToRegexp(nValue);
+            condition = p -> p.getFileName()
                     .toString()
-                    .matches(maskToRegexp(s));
+                    .matches(regexpString);
         } else {
-//            condition = p -> Pattern.compile(nValue).matcher(p.getFileName().toString()).matches();
-            System.out.println(nValue);
-//            condition = p -> p.getFileName().toString().matches(nValue);
-            condition = new RegexPredicate(nValue);
-            System.out.println(condition.test(Path.of("D:\\11111\\Username\\testDirectory2\\555.txt")));
+            condition = p -> p.getFileName()
+                    .toString()
+                    .matches(nValue);
         }
     }
 
-    private String maskToRegexp(String s) {
-        StringBuilder rsl = new StringBuilder();
-        char[] chars = s.toCharArray();
-        for (char aChar : chars) {
-            switch (aChar) {
-                case '*' -> rsl.append(".*");
-                case '.' -> rsl.append("\\\\.");
-                case '?' -> rsl.append(".{1}");
-                default -> rsl.append(aChar);
-            }
-        }
-        return rsl.toString();
+    /**
+     * Преобразование маски в регулярное выражение
+     * @param maskString маска, которую необходимо преобразовать в регулярное выражение
+     * @return String полученное регулярное выражение
+     */
+    private String maskToRegexp(String maskString) {
+        return maskString.replace(".", "[.]").replace("*", ".+").replace("?", ".");
     }
 
+    /**
+     * Проверка входных параметров:
+     * существует ли директория, которую указал пользователь?
+     * правильно ли задан параметр поиска name, mask, regex?
+     * правильно ли задано имя выходного файла?
+     * корректно ли записано регулярное выражение?
+     * @param argsName распарсенные ключи
+     */
     private void validation(ArgsName argsName) {
         dValue = argsName.get("d");
         nValue = argsName.get("n");
@@ -87,10 +120,12 @@ public class Find {
                 || oValue.endsWith(".") || oValue.length() < 3) {
             throw new IllegalArgumentException("wrong log file name");
         }
-//        try {
-//            Pattern pattern = Pattern.compile(nValue);
-//        } catch (PatternSyntaxException pse) {
-//            throw new IllegalArgumentException("regular expression is not valid");
-//        }
+        if ("regex".equals(tValue)) {
+            try {
+                Pattern pattern = Pattern.compile(nValue);
+            } catch (PatternSyntaxException pse) {
+                throw new IllegalArgumentException("regular expression is not valid");
+            }
+        }
     }
 }
