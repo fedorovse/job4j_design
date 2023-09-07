@@ -1,15 +1,14 @@
+INSERT INTO
+	roles(role)
+VALUES
+	('buyer'),
+	('client');
 
 INSERT INTO
-	users(name)
+	users(name, roles_id)
 VALUES
-	('Andrey'),
-	('Ivan');
-
-INSERT INTO
-	roles(role, user_id)
-VALUES
-	('buyer', 1),
-	('buyer', 2);
+	('Andrey', 1),
+	('Ivan', 1);
 
 INSERT INTO
 	rules(rule)
@@ -21,13 +20,25 @@ INSERT INTO
 	roles_rules(roles_id, rules_id)
 VALUES
 	(1, 2),
-	(2, 1);
+	(1, 1);
 
 INSERT INTO
-	items(item, user_id)
+	categories(category)
 VALUES
-	('ball', 1),
-	('condom', 2);
+	('toys'),
+	('18+');
+
+INSERT INTO
+	states(state)
+VALUES
+	('sent'),
+	('received');
+
+INSERT INTO
+	items(item, user_id, categories_id, states_id)
+VALUES
+	('ball', 1, 1, 1),
+	('condom', 2, 2, 1);
 
 INSERT INTO
 	comments(comment, items_id)
@@ -40,16 +51,4 @@ INSERT INTO
 VALUES
 	('ball.jpg', 1),
 	('condom.jpg', 2);
-
-INSERT INTO
-	categories(category, items_id)
-VALUES
-	('toys', 1),
-	('18+', 2);
-
-INSERT INTO
-	states(state, items_id)
-VALUES
-	('sent', 1),
-	('received', 2);
 
